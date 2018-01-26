@@ -1,0 +1,9 @@
+Hello everybody!
+
+All Game jam files will be stored here! There are only 2 rules:
+
+1. Don't talk about Fight Club
+
+2. Don't attempt to commit your files onto the master branch outside of the office, in case we roll over somebody else's work!
+
+Thanks, Josh
