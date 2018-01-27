@@ -7,12 +7,14 @@ public class TapeIntoDeck : MonoBehaviour {
 	public static bool tapeEngaging = false;
 	public static bool tapeEngaged = false;
 
-	 void OnTriggerEnter(Collider other) {
-		this.transform.parent = other.transform;
-		this.transform.localPosition = new Vector3(0, 0.26f, 0.2f);
-		this.transform.localRotation = Quaternion.identity;
-		this.transform.RotateAround (transform.position, transform.right, 90);
-		tapeEngaging = true;
+	 void OnTriggerEnter(Collider collider) {
+		if(collider.gameObject.name == "CassettePlayer"){
+			this.transform.parent = collider.transform;
+			this.transform.localPosition = new Vector3(0, 0.26f, 0.2f);
+			this.transform.localRotation = Quaternion.identity;
+			this.transform.RotateAround (transform.position, transform.right, 90);
+			tapeEngaging = true;
+		}
     }
 	
 	void Update(){
