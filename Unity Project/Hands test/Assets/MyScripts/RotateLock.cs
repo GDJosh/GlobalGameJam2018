@@ -2,76 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateLock : MonoBehaviour {
-    
-    public float MaxRotationValue = 0.5f;
-    public float MinRotationValue = -0.5f;
-    public char rotateAxis = 'x';
+public class RotateLock : MonoBehaviour
+{
+    Quaternion myRot;
     Rigidbody rigidbody;
-	// Use this for initialization
-	void Start () {
-        rigidbody = GetComponent<Rigidbody>();
-    }
-	
-	// Update is called once per frame
-	void Update ()
+    // Use this for initialization
+    void Start()
     {
+        rigidbody = GetComponent<Rigidbody>();
+        myRot = transform.rotation;
+    }
 
-        switch (rotateAxis)
-        {
-            case ('x'):
+    // Update is called once per frame
+    void Update()
+    {
+        float anglew = 0.0F;
+        float tempvect3 = transform.localEulerAngles.z;
 
-                float angleX = 0.0F;
-                float tempvect = transform.localEulerAngles.x;
-                if(tempvect > 90 || tempvect < -90)
-                {
-                    var joint = GetComponent<FixedJoint>();
-                    if (joint != null)
-                    {
-                        joint.connectedBody = null;
-                        Destroy(joint);
-                        rigidbody.useGravity = true;
-                    }
-                }
-                angleX = Mathf.Clamp(tempvect, -90F, 90F);
-                Quaternion quatAngle = Quaternion.AngleAxis(angleX, Vector3.right);
-                rigidbody.rotation = quatAngle;
-                break;
-            case ('y'):
-                float angleY= 0.0F;
-                float tempvect2 = transform.localEulerAngles.y;
-                if (tempvect2 > 90 || tempvect2 < -90)
-                {
-                    var joint = GetComponent<FixedJoint>();
-                    if (joint != null)
-                    {
-                        joint.connectedBody = null;
-                        Destroy(joint);
-                        rigidbody.useGravity = true;
-                    }
-                }
-                angleY = Mathf.Clamp(tempvect2, -90F, 90F);
-                Quaternion quatAngle2 = Quaternion.AngleAxis(angleY, Vector3.up);
-                rigidbody.rotation = quatAngle2;
-                break;
-            case ('z'):
-                float angleZ = 0.0F;
-                float tempvect3 = transform.localEulerAngles.z;
-                if (tempvect3 > 90 || tempvect3 < -90)
-                {
-                    var joint = GetComponent<FixedJoint>();
-                    if (joint != null)
-                    {
-                        joint.connectedBody = null;
-                        Destroy(joint);
-                        rigidbody.useGravity = true;
-                    }
-                }
-                angleZ = Mathf.Clamp(tempvect3, -90F, 90F);
-                Quaternion quatAngle3 = Quaternion.AngleAxis(angleZ, Vector3.forward);
-                rigidbody.rotation = quatAngle3;
-                break;
-        }
-        
-	}
+        anglew = Mathf.Clamp(tempvect3, -90F, 90F);
+        Quaternion quatAngle = Quaternion.AngleAxis(anglew, Vector3.forward);
+        var rot = Quaternion.Euler(0, 0, anglew);
+        transform.rotation = transform.rotation * rot;
+    }
 }

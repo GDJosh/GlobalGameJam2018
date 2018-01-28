@@ -7,7 +7,7 @@ public class VRControllerHandler : MonoBehaviour
 
     private SteamVR_TrackedObject trackedObj;
     private GameObject collidingObject;
-    private GameObject objectInHand;
+    public GameObject objectInHand;
     private SteamVR_Controller.Device Controller
     {
         get { return SteamVR_Controller.Input((int)trackedObj.index); }
@@ -52,32 +52,37 @@ public class VRControllerHandler : MonoBehaviour
     }
     public void ReleaseObject()
     {
+        Debug.Log("Releasing");
         if (GetComponent<FixedJoint>())
         {
-            GetComponent<FixedJoint>().connectedBody = null;
-            Destroy(GetComponent<FixedJoint>());
-            objectInHand.GetComponent<Rigidbody>().useGravity = true;
+            Debug.Log("Has Joint");
+            if (GetComponent<FixedJoint>().connectedBody.name == "Me-ScannerKNob")
+            {
+                Debug.Log("Release Knob");
+                var obj = GetComponent<FixedJoint>().connectedBody;
+                Destroy(GetComponent<FixedJoint>());
+            }
+            else
+            {
+                GetComponent<FixedJoint>().connectedBody = null;
 
-            objectInHand.GetComponent<Rigidbody>().velocity = Controller.velocity;
-            objectInHand.GetComponent<Rigidbody>().angularVelocity = Controller.angularVelocity;
-
-
+                Destroy(GetComponent<FixedJoint>());
+                objectInHand.GetComponent<Rigidbody>().useGravity = true;
+                objectInHand.GetComponent<Rigidbody>().velocity = Controller.velocity;
+                objectInHand.GetComponent<Rigidbody>().angularVelocity = Controller.angularVelocity;
+            }
         }
         objectInHand = null;
     }
     private FixedJoint AddFixedJoint()
     {
         FixedJoint fx = gameObject.AddComponent<FixedJoint>();
-        fx.breakForce = 20000;
-        fx.breakTorque = 20000;
+        
         return fx;
     }
     // Update is called once per frame
     void Update()
     {
-        if (Controller.GetAxis() != Vector2.zero)
-        {
-        }
 
         // 2
         if (Controller.GetHairTriggerDown())
@@ -119,10 +124,7 @@ public class VRControllerHandler : MonoBehaviour
         // 5
         if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
         {
-            if (objectInHand)
-            {
-                ReleaseObject();
-            }
+                ReleaseObject();            
         }
     }
 }

@@ -15,11 +15,26 @@ public class TapeIntoDeck : MonoBehaviour {
             this.transform.localRotation = Quaternion.identity;
             this.transform.RotateAround(transform.position, transform.right, 90);
             tapeEngaging = true;
+
+
+            var hands = GameObject.FindGameObjectsWithTag("Hand");
+
+            foreach (var hand in hands)
+            {
+                if (hand.GetComponent<GameObject>() == this.gameObject)
+                {
+                    hand.GetComponent<VRControllerHandler>().ReleaseObject();
+                }
+            }
         }
     }
 	public bool tapeBusy()
     {
         return (tapeEngaging || tapeEngaged);
+    }
+    public void disengageTape()
+    {
+        tapeEngaged = false;
     }
 	void Update(){
 		if(tapeEngaging == true){

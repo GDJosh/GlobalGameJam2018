@@ -53,8 +53,12 @@
   <ItemGroup>
      <Compile Include="Assets\DropTape.cs" />
      <Compile Include="Assets\EjectScript.cs" />
+     <Compile Include="Assets\MyScripts\AudioFeedback.cs" />
+     <Compile Include="Assets\MyScripts\FreqTuner.cs" />
+     <Compile Include="Assets\MyScripts\MainGUI.cs" />
      <Compile Include="Assets\MyScripts\PlayTape.cs" />
      <Compile Include="Assets\MyScripts\RotateLock.cs" />
+     <Compile Include="Assets\MyScripts\ScoreManager.cs" />
      <Compile Include="Assets\MyScripts\TapeIntoDeck.cs" />
      <Compile Include="Assets\MyScripts\VRControllerHandler.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
