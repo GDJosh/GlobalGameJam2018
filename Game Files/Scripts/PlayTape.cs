@@ -31,10 +31,12 @@ public class PlayTape : MonoBehaviour {
 		AudioSource audio = GetComponent<AudioSource>();
 		audio.clip = audioTracks[tracksPlayed];
 		audio.Play();
+		MainGUI.listeners.TapePlayerPlaying = true;
 		tracksPlayed++;
 	}
 	void stopCassette(){
 		AudioSource audio = GetComponent<AudioSource>();
 		audio.Stop();
+		MainGUI.listeners.TapePlayerPlaying = false;
 	}
 }

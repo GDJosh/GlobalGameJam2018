@@ -24,6 +24,7 @@ public class AudioFeedback : MonoBehaviour {
 		frequency = FreqTuner.frequency;
 		for(int i =0;i<2;i++){
 			if((frequency > feedbackRanges[i] - 2)&&(frequency < feedbackRanges[i] + 2)){
+				MainGUI.listeners.RadioInterference = true;
 				freqDist = frequency - feedbackRanges[i];
 				if(freqDist < 0){
 					freqDist = -freqDist;
@@ -32,10 +33,12 @@ public class AudioFeedback : MonoBehaviour {
 				feedbackSource = feedback.GetComponent<AudioSource>();
 				musicSource.volume = freqDist/2;
 				feedbackSource.volume = (2 - freqDist)/2;
+				break;
 				//Debug.Log(musicSource.volume);
 			} else {
 				freqDist = frequency - feedbackRanges[0];
 				//Debug.Log("NOT IN RANGE " + freqDist);
+				MainGUI.listeners.RadioInterference = false;
 			}
 		}
 	}
